@@ -1,6 +1,9 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 
+import PlanetBarChart from "../components/PlanetsBarChart";
+import PlanetsTable from "../components/PlanetsTable";
+
 function AllPlanetsPage() {
   const axios = require("axios");
   const promises = [];
@@ -9,6 +12,16 @@ function AllPlanetsPage() {
 
   const [isLoading, setIsLoading] = useState(true);
   const [loadedPlanets, setLoadedPlanets] = useState();
+
+  function planetSort(a, b) {
+    if (a.name < b.name) {
+      return -1;
+    }
+    if (a.name > b.name) {
+      return 1;
+    }
+    return 0;
+  }
 
   useEffect(() => {
     setIsLoading(true);
@@ -28,14 +41,12 @@ function AllPlanetsPage() {
         setLoadedPlanets(
           planetsArr.concat.apply(planetsArr, planets).filter(Boolean)
         );
-        console.log(loadedPlanets);
         setIsLoading(false);
       })
       .catch((error) => {
         console.log(error);
       });
-  }),
-    [];
+  }, []);
 
   if (isLoading) {
     // TODO: Add Spinner wheel
@@ -46,10 +57,14 @@ function AllPlanetsPage() {
     );
   }
 
+  
+
   // Actual return should return a Chart and the Table
   return (
     <section>
-      <h1>All Planets</h1>
+      <h1>All Planets Page Mpre coming soon..</h1>
+      <PlanetBarChart planets={loadedPlanets.sort(planetSort)} />
+      <PlanetsTable planets={loadedPlanets.sort(planetSort)} />
     </section>
   );
 }
