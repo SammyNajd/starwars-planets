@@ -14,6 +14,7 @@ function PlanetsTable(props) {
   ];
 
   function cleanPlanetData(planets) {
+    console.log(planets.length)
     return planets.map((planet) => {
       return {
           "id": idCounter++,

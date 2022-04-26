@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 
 import PlanetBarChart from "../components/PlanetsBarChart";
 import PlanetsTable from "../components/PlanetsTable";
+import { CircularProgress, Box} from "@mui/material";
 
 function AllPlanetsPage() {
   const axios = require("axios");
@@ -51,9 +52,9 @@ function AllPlanetsPage() {
   if (isLoading) {
     // TODO: Add Spinner wheel
     return (
-      <section>
-        <p>Loading....</p>
-      </section>
+      <Box sx={{display: 'flex'}}>
+        <CircularProgress />
+      </Box>
     );
   }
 
