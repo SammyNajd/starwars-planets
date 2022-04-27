@@ -1,9 +1,9 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 
 import PlanetBarChart from "../components/PlanetsBarChart";
 import PlanetsTable from "../components/PlanetsTable";
-import { CircularProgress, Box} from "@mui/material";
+import { CircularProgress, Box, Grid, Typography} from "@mui/material";
 
 function AllPlanetsPage() {
   const axios = require("axios");
@@ -26,7 +26,6 @@ function AllPlanetsPage() {
 
   useEffect(() => {
     setIsLoading(true);
-
     for (let page = 1; page <= 6; page++) {
       promises.push(
         axios
@@ -50,10 +49,10 @@ function AllPlanetsPage() {
   }, []);
 
   if (isLoading) {
-    // TODO: Add Spinner wheel
     return (
-      <Box sx={{display: 'flex'}}>
-        <CircularProgress />
+      <Box sx={{display: 'flex', justifyContent:"center", alignContent:"center"}}>
+        <CircularProgress sx={{position:'absolute', top:'50%', left:'50%'}}/>
+        <Typography variant="h6" sx={{position:'absolute', top:'55%', left:'48%'}}>Loading..</Typography>
       </Box>
     );
   }
@@ -62,11 +61,20 @@ function AllPlanetsPage() {
 
   // Actual return should return a Chart and the Table
   return (
-    <section>
-      <h1>All Planets Page Mpre coming soon..</h1>
-      <PlanetBarChart planets={loadedPlanets.sort(planetSort)} />
-      <PlanetsTable planets={loadedPlanets.sort(planetSort)} />
-    </section>
+    <Box sx={{flexGrow: 1}}>
+      <Grid container spacing={2} direction="column" alignItems="center" justifyContent="center">
+        <Grid item xs={12}>
+          <Typography variant="h2" sx={{textAlign:'center'}}>Star Wars Planets</Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <PlanetBarChart planets={loadedPlanets.sort(planetSort)} />
+        </Grid>
+        <Grid item xs={12}>
+          <PlanetsTable planets={loadedPlanets.sort(planetSort)} />
+        </Grid>
+      </Grid>
+    </Box>
+
   );
 }
 

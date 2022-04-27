@@ -1,6 +1,6 @@
 import Plot from "react-plotly.js";
 import { Fragment, useState } from "react";
-import {Select, MenuItem, InputLabel, FormControl, FormHelperText, SelectChangeEvent } from "@mui/material";
+import {Box, Select, MenuItem, InputLabel, FormControl, FormHelperText, SelectChangeEvent } from "@mui/material";
 
 
 
@@ -42,7 +42,7 @@ function PlanetBarChart(props) {
 
 
   return (
-    <Fragment>
+    <Box display="flex" justifyContent="center" alignItems="center" minHeight="50vh">
       <FormControl sx={{m: 1, minWidth: 120}}>
         <InputLabel id="chartingInput">Chart Options</InputLabel>
         <Select
@@ -70,7 +70,7 @@ function PlanetBarChart(props) {
         ]}
         layout={{ width: 1000, height: 500, title: "Planets and " + chartingOptionDisplayText[chartingOption] }}
       />
-    </Fragment>
+    </Box >
   );
 }
 
