@@ -1,0 +1,26 @@
+.loadingBox {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.circularLoading {
+    position: absolute;
+    top: 50%;
+    left: 49%
+}
+
+.loadingText {
+    position: absolute;
+    top: 55%;
+    left: 48%;
+}
+
+.box {
+    flex-grow: 1;
+}
+
+.mainGrid {
+    align-items: center;
+    justify-content: center;
+}

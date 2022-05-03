@@ -1,17 +1,17 @@
-import { Route, Routes, Switch, BrowserRouter } from "react-router-dom";
-import "./App.css";
-import axios from "axios";
+import { Fragment } from "react";
+import { Route, Routes, Navigate, BrowserRouter } from "react-router-dom";
 import AllPlanetsPage from "./pages/AllPlanets";
 
 function App() {
   return (
-    <div className="App">
+    <Fragment>
       <BrowserRouter>
         <Routes>
           <Route exact path="/" element={<AllPlanetsPage />} />
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </BrowserRouter>
-    </div>
+    </Fragment>
   );
 }
 

@@ -1,8 +1,8 @@
 import Plot from "react-plotly.js";
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import {Box, Select, MenuItem, InputLabel, FormControl, FormHelperText, SelectChangeEvent } from "@mui/material";
 
-
+import classes from './styles/PlanetsBarChart.module.css';
 
 function PlanetBarChart(props) {
 
@@ -19,9 +19,6 @@ function PlanetBarChart(props) {
     setChartingOption(e.target.value)
   }
 
-  // Left off here, do I need to use a useEffect hook to update the data?
-  // Check more plotly resources
-
   function setChartingData() {
     if (chartingOption === 'rotation_period'){
       return props.planets.map((planet) => planet.rotation_period)
@@ -32,7 +29,7 @@ function PlanetBarChart(props) {
     else if (chartingOption === 'diameter') {
       return props.planets.map((planet) => planet.diameter)
     }
-    else if (chartingOption == 'surface_water'){
+    else if (chartingOption === 'surface_water'){
       return props.planets.map((planet) => planet.surface_water)
     }
     else {
@@ -42,8 +39,8 @@ function PlanetBarChart(props) {
 
 
   return (
-    <Box display="flex" justifyContent="center" alignItems="center" minHeight="50vh">
-      <FormControl sx={{m: 1, minWidth: 120}}>
+    <Box className={classes.box}>
+      <FormControl sx={{position:'absolute', left: '10%' }} className={classes.formControl}>
         <InputLabel id="chartingInput">Chart Options</InputLabel>
         <Select
           labelId='chartingInputLabel'
@@ -59,13 +56,14 @@ function PlanetBarChart(props) {
           </Select>
           <FormHelperText>Select a value to chart by</FormHelperText>
       </FormControl>
-
       <Plot
+        className={classes.plot}
         data={[
           {
             type: "bar",
             x: props.planets.map((planet) => planet.name),
             y: setChartingData(),
+            marker: {color: "#3f50b5"}
           },
         ]}
         layout={{ width: 1000, height: 500, title: "Planets and " + chartingOptionDisplayText[chartingOption] }}

@@ -1,6 +1,7 @@
 import { DataGrid } from "@mui/x-data-grid";
-import { Fragment } from "react";
-import {Grid, Box} from '@mui/material'
+import {Box} from '@mui/material';
+
+import classes from './styles/PlanetsTable.module.css';
 
 function PlanetsTable(props) {
   let idCounter = 0
@@ -14,8 +15,14 @@ function PlanetsTable(props) {
     { field: "surface_water", headerName: "Surface Water",  minWidth: '100', flex: 1 },
   ];
 
+  const styles = theme => ({
+    activeSortIcon: {
+      opacity: 1,
+      color: 'white'
+    },
+  })
+
   function cleanPlanetData(planets) {
-    console.log(planets.length)
     return planets.map((planet) => {
       return {
           "id": idCounter++,
@@ -33,8 +40,11 @@ function PlanetsTable(props) {
  
   return (
       <Box sx={{ height: 400, width: '100vh'}}>
-        <br />
-        <DataGrid rows={cleanPlanetData(props.planets)} columns={columns} rowsPerPageOptions={[10]} pageSize={10} pagination />
+        <DataGrid sx={{'.MuiDataGrid-columnHeader': {
+          backgroundColor: '#3f50b5',
+          color: 'white'
+        }}} rows={cleanPlanetData(props.planets)} classes={{sortIcon: styles.activeSortIcon}} 
+            columns={columns} rowsPerPageOptions={[10]} pageSize={10} pagination />
       </Box>
   );
 }

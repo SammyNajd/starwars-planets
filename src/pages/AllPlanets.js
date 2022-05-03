@@ -1,15 +1,20 @@
 import axios from "axios";
-import { useState, useEffect, Fragment } from "react";
+import { useState, useEffect } from "react";
+import { CircularProgress, Box, Grid, Typography} from "@mui/material";
 
 import PlanetBarChart from "../components/PlanetsBarChart";
 import PlanetsTable from "../components/PlanetsTable";
-import { CircularProgress, Box, Grid, Typography} from "@mui/material";
+import MainBar from "../components/MainBar";
+import classes from './AllPlanets.module.css';
+
 
 function AllPlanetsPage() {
   const axios = require("axios");
   const promises = [];
   const planets = [];
   let planetsArr = [];
+  const SWAPI_URL = "https://swapi.dev/api/planets/?page=";
+  const PAGE_COUNT = 6
 
   const [isLoading, setIsLoading] = useState(true);
   const [loadedPlanets, setLoadedPlanets] = useState();
@@ -26,10 +31,10 @@ function AllPlanetsPage() {
 
   useEffect(() => {
     setIsLoading(true);
-    for (let page = 1; page <= 6; page++) {
+    for (let page = 1; page <= PAGE_COUNT; page++) {
       promises.push(
         axios
-          .get("https://swapi.dev/api/planets/?page=" + page)
+          .get(SWAPI_URL + page)
           .then((response) => {
             planets.push(response.data.results);
           })
@@ -38,8 +43,9 @@ function AllPlanetsPage() {
 
     Promise.all(promises)
       .then(() => {
+        planetsArr = planetsArr.concat.apply(planetsArr, planets).filter(Boolean)
         setLoadedPlanets(
-          planetsArr.concat.apply(planetsArr, planets).filter(Boolean)
+          planetsArr.sort(planetSort)
         );
         setIsLoading(false);
       })
@@ -50,27 +56,24 @@ function AllPlanetsPage() {
 
   if (isLoading) {
     return (
-      <Box sx={{display: 'flex', justifyContent:"center", alignContent:"center"}}>
-        <CircularProgress sx={{position:'absolute', top:'50%', left:'50%'}}/>
-        <Typography variant="h6" sx={{position:'absolute', top:'55%', left:'48%'}}>Loading..</Typography>
+      <Box className={classes.loadingBox}>
+        <CircularProgress className={classes.circularLoading} />
+        <Typography variant="h6" className={classes.loadingText}>Loading..</Typography>
       </Box>
     );
   }
-
   
-
-  // Actual return should return a Chart and the Table
   return (
-    <Box sx={{flexGrow: 1}}>
-      <Grid container spacing={2} direction="column" alignItems="center" justifyContent="center">
-        <Grid item xs={12}>
-          <Typography variant="h2" sx={{textAlign:'center'}}>Star Wars Planets</Typography>
+    <Box className={classes.box}>
+      <Grid container spacing={2} direction="column" className={classes.mainGrid}>
+        <Grid item >
+          <MainBar />
         </Grid>
-        <Grid item xs={12}>
-          <PlanetBarChart planets={loadedPlanets.sort(planetSort)} />
+        <Grid item >
+          <PlanetBarChart planets={loadedPlanets} />
         </Grid>
-        <Grid item xs={12}>
-          <PlanetsTable planets={loadedPlanets.sort(planetSort)} />
+        <Grid item >
+          <PlanetsTable planets={loadedPlanets} />
         </Grid>
       </Grid>
     </Box>
