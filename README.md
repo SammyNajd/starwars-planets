@@ -22,4 +22,4 @@ Below is a screenshot of the project.
 
 ## Credits
 
-Thank you to [https://icons8.com/icon/21576/star-wars](Icons8) for the free use of the Star Wars logo. 
+Thank you to [Icons8](https://icons8.com/icon/21576/star-wars) for the free use of the Star Wars logo. 
