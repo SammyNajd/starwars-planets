@@ -9,7 +9,6 @@ import classes from './AllPlanets.module.css';
 
 
 function AllPlanetsPage() {
-  const axios = require("axios");
   const promises = [];
   const planets = [];
   let planetsArr = [];
